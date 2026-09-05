@@ -1,0 +1,9 @@
+[submodule "iotix-node"]
+	path = iotix-node
+	url = https://github.com/pocketix/pocketix-node.git
+[submodule "iotix-react"]
+	path = iotix-react
+	url = https://github.com/pocketix/pocketix-react.git
+[submodule "iotixng"]
+	path = iotixng
+	url = https://github.com/pocketix/pocketixng.git
