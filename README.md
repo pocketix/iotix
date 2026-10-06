@@ -1,7 +1,8 @@
 IoTiX Project Overview
 ======================
 
-**IoTiX** is a block- and form-based visual programming language and editor currently being developed by [Petr John](mailto:ijohn@fit.vut.cz) and [Jiří Hynek](mailto:hynek@fit.vut.cz) at [BUT FIT](https://www.fit.vut.cz/.en), primarily aimed at automating smart devices on mobile phones.
+**IoTiX** is a block- and form-based visual programming language and editor currently being developed by [Petr John](mailto:ijohn@fit.vut.cz), [Jiří Hynek](mailto:hynek@fit.vut.cz) and [Pavel Smrž](https://www.fit.vut.cz/person/smrz/.en)
+at [BUT FIT](https://www.fit.vut.cz/.en), primarily aimed at automating smart devices on mobile phones.
 
 The first prototype was created through a collaboration between BUT FIT and [Logimic](https://www.logimic.com/cs/) as part of the project _Services for Water Management and Monitoring Systems in Retention Basins_.
 
