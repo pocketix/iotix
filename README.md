@@ -1,7 +1,8 @@
 IoTiX Project Overview
 ======================
 
-**IoTiX** is a block- and form-based visual programming language and editor currently being developed by [Petr John](mailto:ijohn@fit.vut.cz), [Jiří Hynek](mailto:hynek@fit.vut.cz) and [Pavel Smrž](https://www.fit.vut.cz/person/smrz/.en)
+**IoTiX** is a block- and form-based visual programming language and editor currently being developed by [Petr John](mailto:john.p@fit.vut.cz), [Jiří Hynek](mailto:hynek@fit.vut.cz), [Tomáš Hruška](mailto:hruska@fit.vut.cz
+) and [Pavel Smrž](https://www.fit.vut.cz/person/smrz/.en)
 at [BUT FIT](https://www.fit.vut.cz/.en), primarily aimed at automating smart devices on mobile phones.
 
 The first prototype was created through a collaboration between BUT FIT and [Logimic](https://www.logimic.com/cs/) as part of the project _Services for Water Management and Monitoring Systems in Retention Basins_.
@@ -13,16 +14,16 @@ This repository is the **umbrella project** for the IoTiX ecosystem: it ties tog
 Submodules
 ----------
 
-| Submodule | Description |
-| --- | --- |
-| [`iotix-react`](https://github.com/pocketix/pocketix-react) | React-based drag-and-drop editor for designing automation flows |
-| [`iotixng`](https://github.com/pocketix/pocketixng) | Angular-based drag-and-drop editor for designing automation flows |
-| [`iotix-node`](https://github.com/pocketix/pocketix-node) | Node.js interpreter that executes automation flows produced by the editors |
+| Submodule                                                   | Description                                                                |
+|-------------------------------------------------------------|----------------------------------------------------------------------------|
+| [`iotix-react`](https://github.com/pocketix/pocketix-react) | React-based VPL editor for designing automation flows                      |
+| [`iotixng`](https://github.com/pocketix/pocketixng)         | Angular-based VPL editor for designing automation flows                    |
+| [`iotix-node`](https://github.com/pocketix/pocketix-node)   | Node.js interpreter that executes automation flows produced by the editors |
 
 ### Cloning
 
 ```bash
-git clone --recurse-submodules git@github.com:pocketix/iotix.git
+git clone --recurse-submodules https://github.com/pocketix/iotix.git
 cd iotix
 ```
 
