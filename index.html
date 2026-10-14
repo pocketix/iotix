@@ -25,6 +25,64 @@
 		<p><strong>IoTiX</strong> specifically refers to the current ecosystem of editors and interpreter built around the
 			first version of the IoTiX scripting language.</p>
 
+		<div class="section">
+			<h2>Installation</h2>
+
+			<h3>Prerequisites</h3>
+			<table>
+				<thead>
+				<tr><th>Requirement</th><th>Version</th><th>Notes</th></tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>Node.js</td>
+					<td>20.19+, 22.12+ or 24+<br/>(24 LTS recommended)</td>
+					<td>The editors require it (Angular CLI 20 and Vite 8 declare
+						<span class="texttt">^20.19.0 || ^22.12.0 || &gt;=24.0.0</span>). CI runs the editors on
+						Node 24 and the interpreter on Node 20.</td>
+				</tr>
+				<tr><td>npm</td><td>10+ (bundled with Node.js)</td><td>All projects use npm workspaces or plain npm scripts.</td></tr>
+				<tr><td>git</td><td>any recent</td><td>Required to fetch the submodules.</td></tr>
+				<tr><td>Google Chrome</td><td>any recent</td><td>Only for the Cypress component and end-to-end tests.</td></tr>
+				<tr><td>Docker</td><td>optional</td><td>Only to build the editor demos as nginx images.</td></tr>
+				</tbody>
+			</table>
+
+			<h3>Getting the Source</h3>
+			<p>The <a href="https://github.com/pocketix/iotix" target="_blank">iotix</a> repository bundles the editors and the
+				interpreter as git submodules:</p>
+			<pre>git clone --recurse-submodules https://github.com/pocketix/iotix.git
+cd iotix
+# if you cloned without --recurse-submodules:
+git submodule update --init --recursive</pre>
+
+			<h3>Editors (React or Angular)</h3>
+			<pre>cd iotix-react        # or: cd iotixng
+npm run install:all
+npm run start:demo    # starts a local dev server with the demo application</pre>
+			<p>The Angular demo is served at <span class="texttt">http://localhost:4200</span>; the React demo prints its URL
+				when it starts. <span class="texttt">npm run build:lib</span> builds only the reusable editor library and
+				<span class="texttt">npm run build:demo</span> produces a production build of the demo.</p>
+
+			<h3>Interpreter</h3>
+			<pre>cd iotix-node
+npm install           # also compiles TypeScript to dist/ (postinstall)
+npm run test</pre>
+			<p>The packages are also published to the GitHub Packages registry as
+				<span class="texttt">@pocketix/iotix-node</span> and <span class="texttt">@pocketix/iotix-react</span>. To
+				install them into another project, point the <span class="texttt">@pocketix</span> scope at that registry in
+				your <span class="texttt">.npmrc</span> (GitHub Packages requires an access token with
+				<span class="texttt">read:packages</span>):</p>
+			<pre>@pocketix:registry=https://npm.pkg.github.com</pre>
+
+			<h3>Docker</h3>
+			<p>Both editor repositories contain a multi-stage <span class="texttt">Dockerfile</span> that builds the demo on
+				<span class="texttt">node:20-alpine</span> and serves it with nginx on port 80:</p>
+			<pre>cd iotix-react        # or: cd iotixng
+docker build -t iotix-editor .
+docker run -p 8080:80 iotix-editor</pre>
+		</div>
+
 
 		<div class="section">
 			<h2>IoTiX Editor (React & Angular)</h2>
@@ -61,6 +119,129 @@
 			<p>Through this architecture, the IoTiX Interpreter provides a powerful backend for executing IoTiX scripts,
 				enabling consistent and adaptable automation across smart environments.
 			</p>
+		</div>
+
+		<div class="section">
+			<h2>Usage &amp; API</h2>
+
+			<h3>Program Format</h3>
+			<p>Programs are JSON. A program is an object with a <span class="texttt">block</span> array of statements.
+				Compound statements (<span class="texttt">if</span>, <span class="texttt">else</span>,
+				<span class="texttt">while</span>, <span class="texttt">fork</span>, ...) carry a
+				<span class="texttt">condition</span> expression and a nested <span class="texttt">block</span>; commands carry
+				<span class="texttt">params</span>. The same structure exists in two forms:</p>
+			<ul>
+				<li><strong>Readable form</strong>: produced and consumed by the editors. Commands and references use the
+					names defined by the language, e.g. <span class="texttt">PowerStrip.1</span> or
+					<span class="texttt">Water Level.lvl_measurement_percent_full</span>.</li>
+				<li><strong>Serialized form</strong>: accepted by the interpreter. Commands are named
+					<span class="texttt">deviceId.commandId.commandValue</span> and references
+					<span class="texttt">deviceId.parameter</span>, where <span class="texttt">deviceId</span> and
+					<span class="texttt">commandId</span> are numeric.</li>
+			</ul>
+			<p>Converting between the two is the responsibility of the <strong>system that embeds the editor</strong>,
+				because only it knows which device and command a name refers to. Before running a program it replaces names
+				with ids; afterwards it maps the returned commands back to names for display. Neither the editors nor the
+				interpreter perform this mapping. The demo applications show one way to do it
+				(<span class="texttt">capabilityAndVariablesReplacers.ts</span> in each editor's demo). A program in serialized
+				form:</p>
+			<pre>{
+  "block": [
+    {
+      "name": "if",
+      "condition": "hours(now) &gt; 14 &amp;&amp; hours(now) &lt; 23",
+      "block": [
+        { "name": "5451.56.close", "params": [] }
+      ]
+    },
+    { "name": "write", "params": ["5451.temperature", "21"] }
+  ]
+}</pre>
+			<p>Like the other statements, a parameter write is identified by its name: <span class="texttt">write</span>
+				with the params <span class="texttt">[reference, value]</span>. The value is stored as given, without
+				evaluation.</p>
+			<p>The available statements, their forms and icons are not hard-coded: each editor receives a
+				<em>language</em> definition at runtime, which is what enables Dynamic Language Modification.</p>
+
+			<h3>Embedding the Editor</h3>
+			<p><strong>React</strong> (<span class="texttt">@pocketix/iotix-react</span>) exports the
+				<span class="texttt">IotixEditor</span> component together with <span class="texttt">defaultSettings</span>,
+				<span class="texttt">capabilityTemplate</span> and the settings types:</p>
+			<pre>import {IotixEditor} from '@pocketix/iotix-react';
+
+&lt;IotixEditor language={language}
+             program={program}
+             level={0}
+             onProgramChange={(changed) =&gt; setProgram(changed)}
+             settings={settings}      // optional, defaults to defaultSettings
+             menu={&lt;MyButtons/&gt;} /&gt;  // optional, extra menu items</pre>
+
+			<p><strong>Angular</strong> (<span class="texttt">iotixng</span>) provides
+				<span class="texttt">IotixVpModule</span>; its root component is
+				<span class="texttt">&lt;iotix-vp-program&gt;</span>:</p>
+			<pre>&lt;iotix-vp-program
+    [language]="language"
+    [program]="program"
+    [settings]="settings"
+    (onProgramChange)="onProgramChange($event)"&gt;
+  &lt;div menu&gt;&lt;!-- optional extra menu items --&gt;&lt;/div&gt;
+&lt;/iotix-vp-program&gt;</pre>
+
+			<h3>Interpreter API</h3>
+			<p><span class="texttt">@pocketix/iotix-node</span> exports <span class="texttt">ProgramRunner</span>,
+				<span class="texttt">ProgramRunnerError</span>, <span class="texttt">ICommander</span>,
+				<span class="texttt">IReferenceManager</span>, <span class="texttt">ReferencedValue</span>,
+				<span class="texttt">Command</span>, <span class="texttt">Program</span> and
+				<span class="texttt">ValueType</span>. To integrate it, implement the two interfaces and subclass
+				<span class="texttt">ReferencedValue</span> for your device parameters:</p>
+			<pre>interface ICommander {
+  // Receives the commands produced by evaluation; dry === true means "do not actuate".
+  sendCommands(dry: boolean, commands: Command[]): Promise&lt;void&gt;;
+}
+
+interface IReferenceManager {
+  // Loads current values of the device parameters the program references.
+  load(references: {parameterName: string; deviceId: number}[]): Promise&lt;ReferencedValue[]&gt;;
+  // Persists parameters that the program changed (write statements).
+  store(references: ReferencedValue[]): Promise&lt;void&gt;;
+}</pre>
+			<p>Then parse and run a program:</p>
+			<pre>import {ProgramRunner, ProgramRunnerError} from '@pocketix/iotix-node';
+
+const runner = new ProgramRunner()
+    .setCommander(commander)
+    .setReferenceManager(referenceManager)
+    .parseProgram(program);           // serialized form, after the host's name-to-id conversion
+
+try {
+  const {commands, toUpdate} = await runner.run(/* dry = */ false);
+} catch (e) {
+  if (e instanceof ProgramRunnerError) {
+    console.error(e.phase, e.cause); // 'parse' | 'load' | 'evaluate' | 'sendCommands' | 'store'
+  }
+}</pre>
+			<p><span class="texttt">run(dry)</span> loads the referenced parameters through
+				<span class="texttt">IReferenceManager.load</span>, evaluates the program, passes the resulting commands and the
+				<span class="texttt">dry</span> flag to <span class="texttt">ICommander.sendCommands</span>, stores changed
+				parameters through <span class="texttt">IReferenceManager.store</span>, and returns both lists. The interpreter
+				works only with this digital twin and never communicates with devices: delivering the commands to the devices
+				and persisting state is the job of the system above IoTiX, reached through your
+				<span class="texttt">ICommander</span> and <span class="texttt">IReferenceManager</span> implementations. That
+				system also decides whether a command is executed at all, so ignoring commands when
+				<span class="texttt">dry</span> is <span class="texttt">true</span> gives a safe simulation mode. Every failure is rethrown as a <span class="texttt">ProgramRunnerError</span> whose
+				<span class="texttt">phase</span> identifies the failing step.</p>
+
+			<h3>Testing</h3>
+			<table>
+				<thead>
+				<tr><th>Project</th><th>Command</th><th>What it runs</th></tr>
+				</thead>
+				<tbody>
+				<tr><td>iotix-node</td><td><span class="texttt">npm run test</span></td><td>Mocha unit tests</td></tr>
+				<tr><td>iotix-react, iotixng</td><td><span class="texttt">npm run test:component</span></td><td>Cypress component tests</td></tr>
+				<tr><td>iotix-react, iotixng</td><td><span class="texttt">npm run test:e2e</span></td><td>Cypress end-to-end tests against the demo</td></tr>
+				</tbody>
+			</table>
 		</div>
 
 		<div class="section">
