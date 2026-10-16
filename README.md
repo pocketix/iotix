@@ -32,6 +32,14 @@ If you already cloned without `--recurse-submodules`:
 git submodule update --init --recursive
 ```
 
+### Full source archive
+
+GitHub's source zip of a release leaves the submodule folders empty. `scripts/build-full-zip.sh [tag]` builds `iotix-<tag>-full.zip` with every submodule included, from a fresh clone of the tag:
+
+```bash
+scripts/build-full-zip.sh v3.0.0
+```
+
 IoTiX Editor (React & Angular)
 -------------------------------
 

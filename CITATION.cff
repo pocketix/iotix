@@ -36,7 +36,7 @@ authors:
     orcid: "https://orcid.org/0000-0002-5638-1362"
     affiliation: "Faculty of Information Technology, Brno University of Technology"
 version: 3.0.0
-date-released: 2026-10-14
+date-released: 2026-10-16
 license: MIT
 repository-code: "https://github.com/pocketix/iotix"
 url: "https://pocketix.github.io/iotix"
