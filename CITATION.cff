@@ -37,6 +37,14 @@ authors:
     affiliation: "Faculty of Information Technology, Brno University of Technology"
 version: 3.0.0
 date-released: 2026-10-16
+doi: 10.5281/zenodo.23424338
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23424338
+    description: "Version 3.0.0, archived with all submodules"
+  - type: doi
+    value: 10.5281/zenodo.23424337
+    description: "All versions, resolves to the latest"
 license: MIT
 repository-code: "https://github.com/pocketix/iotix"
 url: "https://pocketix.github.io/iotix"

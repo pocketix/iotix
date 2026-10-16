@@ -1,6 +1,8 @@
 IoTiX Project Overview
 ======================
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23424337.svg)](https://doi.org/10.5281/zenodo.23424337)
+
 **IoTiX** is a block- and form-based visual programming language and editor currently being developed by [Petr John](mailto:john.p@fit.vut.cz), [Jiří Hynek](mailto:hynek@fit.vut.cz), [Tomáš Hruška](mailto:hruska@fit.vut.cz) and [Pavel Smrž](https://www.fit.vut.cz/person/smrz/.en)
 at [BUT FIT](https://www.fit.vut.cz/.en), primarily aimed at automating smart devices on mobile phones.
 
@@ -39,6 +41,8 @@ GitHub's source zip of a release leaves the submodule folders empty. `scripts/bu
 ```bash
 scripts/build-full-zip.sh v3.0.0
 ```
+
+The v3.0.0 archive is on Zenodo as [10.5281/zenodo.23424338](https://doi.org/10.5281/zenodo.23424338).
 
 IoTiX Editor (React & Angular)
 -------------------------------
