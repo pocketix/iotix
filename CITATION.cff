@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: "If you use IoTiX, please cite it using the metadata below."
+type: software
+title: "IoTiX: A Mobile-Native Visual Programming Language for the Internet of Things"
+abstract: >-
+  The growth of the Internet of Things (IoT) is slowed by tools not designed
+  for non-programmers on mobile devices. Existing solutions trade off
+  usability and expressivity: trigger-action approaches like IFTTT sacrifice
+  expressivity for ease of use, while visual languages like Blockly can be
+  cumbersome on small screens. We present IoTiX: a mobile-first visual
+  programming language that blends block-based and form-based paradigms and
+  is powered by a dynamic metamodel that adapts constructs to selected
+  devices, restricting users to valid, compatible actions. Validated through
+  user studies and a pilot deployment in Logimic, IoTiX reduces the gap
+  between usability and expressive power, enabling non-trivial IoT
+  automations.
+authors:
+  - family-names: John
+    given-names: Petr
+    email: john.p@fit.vut.cz
+    orcid: "https://orcid.org/0009-0000-8547-8510"
+    affiliation: "Faculty of Information Technology, Brno University of Technology"
+  - family-names: Hynek
+    given-names: Jiří
+    email: hynek@fit.vut.cz
+    orcid: "https://orcid.org/0000-0002-7292-6094"
+    affiliation: "Faculty of Information Technology, Brno University of Technology"
+  - family-names: Hruška
+    given-names: Tomáš
+    email: hruska@fit.vut.cz
+    orcid: "https://orcid.org/0000-0001-5454-6592"
+    affiliation: "Faculty of Information Technology, Brno University of Technology"
+  - family-names: Smrž
+    given-names: Pavel
+    email: smrz@fit.vut.cz
+    orcid: "https://orcid.org/0000-0002-5638-1362"
+    affiliation: "Faculty of Information Technology, Brno University of Technology"
+version: 3.0.0
+date-released: 2026-10-14
+license: MIT
+repository-code: "https://github.com/pocketix/iotix"
+url: "https://pocketix.github.io/iotix"
+keywords:
+  - Visual Programming
+  - IoT
+  - Mobile Devices
+  - End-User Development
+  - Digital Twin
