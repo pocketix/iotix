@@ -37,8 +37,8 @@ IoTiX Editor (React & Angular)
 
 **iotix-react** and **iotixng** provide drag-and-drop interfaces for designing automation flows. These editors are ideal for non-programmers and built on React and Angular respectively.
 
-*   [React Editor Demo](https://pocketix-react.pocketix.org/)
-*   [Angular Editor Demo](https://pocketixng.pocketix.org/)
+*   [React Editor Demo](https://pocketix.github.io/iotix-react/)
+*   [Angular Editor Demo](https://pocketix.github.io/iotixng/)
 
 ### Key Features
 

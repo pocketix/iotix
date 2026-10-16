@@ -77,7 +77,7 @@ npm run test</pre>
 
 			<h3>Docker</h3>
 			<p>Both editor repositories contain a multi-stage <span class="texttt">Dockerfile</span> that builds the demo on
-				<span class="texttt">node:20-alpine</span> and serves it with nginx on port 80:</p>
+				<span class="texttt">node:22-alpine</span> and serves it with nginx on port 80:</p>
 			<pre>cd iotix-react        # or: cd iotixng
 docker build -t iotix-editor .
 docker run -p 8080:80 iotix-editor</pre>
