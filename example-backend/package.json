@@ -1,0 +1,15 @@
+{
+  "name": "iotix-example-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example backend for the IoTiX editor demos, evaluating programs with iotix-node",
+  "license": "MIT",
+  "scripts": {
+    "setup": "npm --prefix ../iotix-node ci",
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

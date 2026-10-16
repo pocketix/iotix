@@ -81,6 +81,16 @@ const { commands, toUpdate } = await runner.run();
 
 `npm run test`
 
+Example Backend
+---------------
+
+[`example-backend`](example-backend) serves the device groups and programs for the editor demos and evaluates programs with **iotix-node** for their Evaluate button. The public demos run without it, on a bundled snapshot of the same data. Its README documents the API and how to point a demo at it:
+
+```bash
+cd example-backend
+npm run setup && npm start
+```
+
 Related Links
 -------------
 *   [Pocketix GitHub Org](https://github.com/pocketix)
